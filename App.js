@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
-import { Home, Signup, Login } from './src/Login Tester';
+import { Home, Signup, Login, Upload } from './src/Login Tester';
 import { auth } from './src/firebase/config';
 
 const Stack = createStackNavigator()
@@ -14,11 +13,14 @@ export default function App() {
   useEffect(() => {
     auth.onAuthStateChanged(user => setUser(user))
   }, [])
-console.log(user)
+  console.log(user)
   return (
     <NavigationContainer>
       {user ? (
-        <Home />
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Upload" component={Upload} />
+        </Stack.Navigator>
       ) : (
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />

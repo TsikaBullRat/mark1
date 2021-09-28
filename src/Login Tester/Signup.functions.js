@@ -1,6 +1,6 @@
 import { auth } from "../firebase/config"
 
-const Submit = (email, password, fname, lname, phoneNumber) =>{
+const Submit = (email, password, fname, lname) =>{
     let name = fname + " " + lname
     auth.createUserWithEmailAndPassword(email, password)
         .then(user=>{
@@ -8,9 +8,7 @@ const Submit = (email, password, fname, lname, phoneNumber) =>{
             user.user.updateProfile({
                 displayName: name,
             })
-            user.user.updatePhoneNumber({
-                phoneNumber: phoneNumber
-            })
+            user.user.sendEmailVerification()
             alert("login succesfull")
         })
         .catch(err=>{
